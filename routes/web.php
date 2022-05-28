@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\dashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,12 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+// Route::middleware([ 'auth:sanctum',  config('jetstream.auth_session'), 'verified'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('backend.dashboard');
+//     })->name('dashboard');
+// });
+Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['auth:sanctum','verified']], function(){
+    //---------------- Dashboard ---------------//
+    Route::get('dashboard',[dashboardController::class, 'dashboard'])->name('dashboard');
+    //---------------- Category -----------------//
+
 });
