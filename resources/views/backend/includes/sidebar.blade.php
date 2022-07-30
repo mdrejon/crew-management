@@ -70,7 +70,7 @@
 
     <ul class="menu-inner py-1">
       <!-- Dashboard -->
-      <li class="menu-item active">
+      <li class="menu-item">
         <a href="{{ url('/') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Analytics">Dashboard</div>
@@ -86,12 +86,12 @@
 
         <ul class="menu-sub">
           <li class="menu-item">
-            <a href="layouts-without-menu.html" class="menu-link">
+            <a href="{{ route('admin.vessel.create') }}" class="menu-link">
               <div data-i18n="Without menu">Add Vessel</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
+            <a href="{{ route('admin.vessel.index') }}" class="menu-link">
               <div data-i18n="Without navbar">Vessel list</div>
             </a>
           </li>
@@ -106,12 +106,12 @@
 
         <ul class="menu-sub">
           <li class="menu-item">
-            <a href="layouts-without-menu.html" class="menu-link">
+            <a href="{{ route('admin.crew.create') }}" class="menu-link">
               <div data-i18n="Without menu">Add Crew</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
+            <a href="{{ route('admin.crew.index') }}" class="menu-link">
               <div data-i18n="Without navbar">Crew list</div>
             </a>
           </li>

@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\admin\dashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\crewController;
+use App\Http\Controllers\admin\vesselController;
+use App\Http\Controllers\admin\dashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect()->route('admin.dashboard');
 });
 
 // Route::middleware([ 'auth:sanctum',  config('jetstream.auth_session'), 'verified'
@@ -27,6 +30,10 @@ Route::get('/', function () {
 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['auth:sanctum','verified']], function(){
     //---------------- Dashboard ---------------//
     Route::get('dashboard',[dashboardController::class, 'dashboard'])->name('dashboard');
-    //---------------- Category -----------------//
+    //---------------- Vessel -----------------//
+    Route::resource('vessel',vesselController::class);
+    //---------------- Crew -----------------//
+    Route::resource('crew',crewController::class);
+    //
 
 });

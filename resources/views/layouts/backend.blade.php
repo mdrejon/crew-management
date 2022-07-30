@@ -122,5 +122,6 @@
     @toastr_js
     @toastr_render
     @stack('script')
+
   </body>
 </html>
