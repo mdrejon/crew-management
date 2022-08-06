@@ -1,10 +1,6 @@
 
-
 @extends('layouts.backend')
 @section('contents')
-<?php
-use Illuminate\Support\Facades\DB;
-?>
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
         <div class="col-xxl">
@@ -20,43 +16,38 @@ use Illuminate\Support\Facades\DB;
                       <table class="table">
                         <thead>
                           <tr>
-                            <th>Name</th>
-                            <th>Status</th>
+                            <th>Crew Name</th>
+                            <th>Vessel Name</th>
+                            <th>Position Applied</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @forelse ($crew as $data )
+                            @forelse ($general_cv as $data )
                                 <tr>
-                                    <td> <a href="{{ route('admin.crew.show', [$data->id]) }}" target="_blank">
+                                    <td> <a href="{{ route('admin.crew.show', [$data->crew_id]) }}" target="_blank">
 
-                                            <img height="50px" width="50px" style="margin-right: 10px" src="{{ asset($data->img) }}" alt="">
                                             <strong>{{ $data->full_name }}</strong>
                                         </a>
                                     </td>
-                                     <td><span class="badge bg-label-primary me-1">{{ $data->status }}</span></td>
+                                    <td> <a href="{{ route('admin.vessel.show', [$data->for_vessel]) }}" target="_blank">
+
+                                            <strong>{{ $data->vessel_name }}</strong>
+                                        </a>
+                                    </td>
+                                    <td>{{ $data->position_applied }}</td>
                                     <td>
                                     <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                         Action
                                         </button>
                                         <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('admin.crew.edit', [$data->id]) }}"
-                                            ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                                        >
-                                        <?php
-                                        $gcv_count = DB::table('general_cvs')->where('crew_id', $data->id)->count();
-                                        ?>
-                                        @if($gcv_count > 0)
-                                        <?php $gcv = DB::table('general_cvs')->where('crew_id', $data->id)->first(); ?>
-                                        <a class="dropdown-item" href="{{ route('admin.general-cv.show', [$gcv->id]) }}"><i class="bx bx-edit-alt me-1"></i> View General CV </a>
-                                        @else
-                                        <a class="dropdown-item" href="{{ route('admin.general-cv.create') }}"><i class="bx bx-edit-alt me-1"></i> Create General CV </a>
-                                        @endif
-
+                                        <a class="dropdown-item" href="{{ route('admin.general-cv.show', [$data->id]) }}"
+                                            ><i class="bx bx-edit-alt me-1"></i> View CV</a>
+                                        <a class="dropdown-item" href="{{ route('admin.general-cv.edit', [$data->id]) }}"
+                                            ><i class="bx bx-edit-alt me-1"></i> Edit</a>
                                         <a class="dropdown-item" href=""
-                                            ><i class="bx bx-trash me-1"></i> Delete</a
-                                        >
+                                            ><i class="bx bx-trash me-1"></i> Delete</a>
                                         </div>
                                     </div>
                                     </td>

@@ -19,7 +19,7 @@ class crewController extends Controller
     {
         $this->setPageTitle('Crew List','Crew List','Crew List');
         $crew = DB::table('crews')->paginate(10);
-        return view('backend.pages.vessel.index', compact('crew'));
+        return view('backend.pages.crew.index', compact('crew'));
     }
 
     /**

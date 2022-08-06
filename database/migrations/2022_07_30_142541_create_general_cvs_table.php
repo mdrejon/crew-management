@@ -15,6 +15,21 @@ return new class extends Migration
     {
         Schema::create('general_cvs', function (Blueprint $table) {
             $table->id();
+            $table->integer('crew_id');
+            $table->string('position_applied');
+            $table->string('application_date');
+            $table->string('for_vessel');
+            $table->string('available_date');
+            $table->string('manning_agent');
+            $table->string('signature_of_applicant');
+            $table->string('signature_date');
+            $table->string('interview_by');
+            $table->string('interview_date');
+            $table->string('department');
+            $table->integer('order');
+            $table->integer('status');
+            $table->integer('create_by');
+            $table->integer('update_by');
             $table->timestamps();
         });
     }

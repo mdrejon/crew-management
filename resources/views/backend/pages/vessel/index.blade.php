@@ -15,30 +15,28 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th>Name</th>
+                            <th>Vessel Name</th>
+                            <th>IMO No</th>
                             <th>Status</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @forelse ($crew as $data )
+                            @forelse ($vassels as $data )
                                 <tr>
-                                    <td> <a href="{{ route('admin.crew.show', [$data->id]) }}" target="_blank">
-
-                                            <img height="50px" width="50px" style="margin-right: 10px" src="{{ asset($data->img) }}" alt="">
-                                            <strong>{{ $data->full_name }}</strong>
-                                        </a>
-                                    </td>
-                                     <td><span class="badge bg-label-primary me-1">{{ $data->status }}</span></td>
+                                    <td> <a href="{{ route('admin.vessel.show', [$data->id]) }}" target="_blank"> <strong>{{ $data->vessel_name }}</strong>  </a> </td>
+                                    <td><a href="{{ route('admin.vessel.show', [$data->id]) }}" target="_blank"> {{ $data->imo_no }}</a></td>
+                                    <td><span class="badge bg-label-primary me-1">{{ $data->status }}</span></td>
                                     <td>
                                     <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                         Action
                                         </button>
                                         <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('admin.crew.edit', [$data->id]) }}"
+                                        <a class="dropdown-item" href="{{ route('admin.vessel.edit', [$data->id]) }}"
                                             ><i class="bx bx-edit-alt me-1"></i> Edit</a
                                         >
+
                                         <a class="dropdown-item" href=""
                                             ><i class="bx bx-trash me-1"></i> Delete</a
                                         >

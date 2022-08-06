@@ -54,7 +54,58 @@
     @toastr_css
     @stack('style')
     <!-- Page CSS -->
+    <style>
 
+        .custom-table table td, .custom-table table th {
+        font-size: ;
+        border: 1px solid #ddd;
+        font-size: 13px;
+        padding: 5px;
+        }
+        .custom-table table {
+        }
+        .custom-table h6 {
+        margin-bottom: 0;
+        padding: 5px;
+        font-weight: 700;
+        }
+        .custom-table table {
+        margin-bottom: 20px !important;
+        }
+
+        .cv-img img {
+        height: 125px;
+        width: 125px;
+        margin-bottom: 20px;
+        }
+        .cv-img {
+        text-align: center;
+        }
+
+        .signiture {
+        display: inline-block;
+        width: 100%;
+        margin: 20px 2px;
+        width: 200px;
+        text-align: center;
+        float: right;
+        }
+        .custom-table {
+        display: inline-block;
+        width: 100%;
+        overflow: hidden;
+        }
+        .signiture span {
+        display: inline-block;
+        margin-top: 10px;
+        }
+        .signiture_title {
+        border-top: 1px solid #ddd;
+        }
+        .signiture img {
+        width: 100%;
+        }
+    </style>
     <!-- Helpers -->
     <script src="{{ asset('backend') }}/assets/vendor/js/helpers.js"></script>
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\crewController;
 use App\Http\Controllers\admin\vesselController;
 use App\Http\Controllers\admin\dashboardController;
+use App\Http\Controllers\admin\general_cvController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['auth:sanctum','ve
     Route::resource('vessel',vesselController::class);
     //---------------- Crew -----------------//
     Route::resource('crew',crewController::class);
-    //
+    //---------------- General CV -----------------//
+    Route::resource('general-cv',general_cvController::class);
 
 });
