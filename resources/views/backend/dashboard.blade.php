@@ -22,6 +22,12 @@
 .das-board:hover {
   background-color: #00A3E8;
 }
+.nav.nav-pills.flex-column.flex-md-row.mb-3, h5 {
+	margin-bottom: 0 !important;
+}
+.nav.nav-pills, .nav.nav-pills h5 {
+	margin-bottom: 0 !important;
+}
 </style>
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">

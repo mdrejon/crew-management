@@ -2,7 +2,7 @@
 @section('contents')
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
-        <form method="POST" action="{{ route('admin.crew.update',[$crew->id]) }}" enctype="multipart/form-data" >
+        <form method="POST" action="{{ route('admin.crew.store') }}" enctype="multipart/form-data" >
           @csrf
             <div class="col-xxl">
                 <div class="card mb-4">
@@ -11,9 +11,18 @@
                     <small class="text-muted float-end">Default label</small>
                 </div>
                 <div class="card-body">
+                    <x-form.input labelName="ID No" name="id_no" placeholder="ID No" />
                     <x-form.input labelName="Last Name" name="last_name" placeholder="Last Name" />
                     <x-form.input labelName="Given Name" name="given_name" placeholder="Enter Given Name" />
                     <x-form.input  labelName="Full Name" name="full_name" placeholder="Enter Full Name" />
+                    <x-form.input  labelName="Sign In" name="sign_in" placeholder="Sign In" />
+                    <x-form.input  labelName="Sign Out" name="sign_out" placeholder="Sign Out" />
+                    <x-form.select name="vessel_id" labelName="Vessel">
+                        <option value="">Select Please</option>
+                        @foreach ($vessels as $data )
+                            <option value="{{ $data->id }}">{{ $data->vessel_name }}</option>
+                        @endforeach
+                    </x-form.select>
                     <x-form.input  type="file" labelName="Image" name="img" placeholder="Enter country Image" />
                     <x-form.input labelName="Place Of Birth" name="place_of_birth" placeholder="Place Of Birth" />
                     <x-form.input labelName="Date Of Birth" name="date_of_birth" placeholder="Date Of Birth" />

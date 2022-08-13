@@ -12,9 +12,18 @@
                     <small class="text-muted float-end">Default label</small>
                 </div>
                 <div class="card-body">
+                    <x-form.input labelName="ID No" value="{{ $crew->id_no }}"  name="id_no" placeholder="ID No" />
                     <x-form.input labelName="Last Name" value="{{ $crew->last_name }}" name="last_name" placeholder="Last Name" />
                     <x-form.input labelName="Given Name" value="{{ $crew->given_name }}" name="given_name" placeholder="Enter Given Name" />
                     <x-form.input  labelName="Full Name" value="{{ $crew->full_name }}" name="full_name" placeholder="Enter Full Name" />
+                    <x-form.input  labelName="Sign In" value="{{ $crew->sign_in }}" name="sign_in" placeholder="Sign In" />
+                    <x-form.input  labelName="Sign Out" value="{{ $crew->sign_out }}" name="sign_out" placeholder="Sign Out" />
+                        <x-form.select name="vessel_id" labelName="Vessel">
+                            <option value="">Select Please</option>
+                            @foreach ($vessels as $data )
+                                <option <?php if($crew->vessel_id == $data->id){echo "selected"; } ?> value="{{ $data->id }}">{{ $data->vessel_name }}</option>
+                            @endforeach
+                        </x-form.select>
                     <x-form.input  type="file" labelName="Image" name="img" placeholder="Enter country Image" />
                         <input type="hidden" name="old_img" value="{{ $crew->img }}">
                     <x-form.input labelName="Place Of Birth" value="{{ $crew->place_of_birth }}" name="place_of_birth" placeholder="Place Of Birth" />

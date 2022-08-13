@@ -29,8 +29,9 @@ class general_cvController extends Controller
         ->leftJoin('crews', 'crews.id', '=', 'general_cvs.crew_id')
         ->select('crews.full_name', 'vessels.vessel_name', 'general_cvs.position_applied', 'general_cvs.id', 'general_cvs.crew_id as crew_id', 'general_cvs.for_vessel as for_vessel')
         ->paginate(10);
+        $certificates = DB::table('certificates')->where('status', '1')->orderBy('order')->get();
 
-        return view('backend.pages.general-cv.index', compact('general_cv'));
+        return view('backend.pages.general-cv.index', compact('general_cv', 'certificates'));
     }
 
     /**
@@ -40,10 +41,11 @@ class general_cvController extends Controller
      */
     public function create()
     {
+        $certificates = DB::table('certificates')->where('status', '1')->orderBy('order')->get();
         $this->setPageTitle('Add New Crew','Add New Crew','Add New Crew');
         $crew = DB::table('crews')->get();
         $vessels = DB::table('vessels')->get();
-        return view('backend.pages.general-cv.add', compact('crew', 'vessels'));
+        return view('backend.pages.general-cv.add', compact('crew', 'vessels', 'certificates'));
     }
 
     /**
@@ -149,7 +151,8 @@ class general_cvController extends Controller
                  for ($x = 0; $x < $count_crew_qualification_certificates; $x++) {
                     crew_qualification_certificate::insert([
                          'crew_id' => $request->crew_id,
-                         'qualification_title' => $request->qualification_title[$x],
+                         'certificate_id' => $request->certificate_id[$x],
+                         'qualification_title' => $request->certificate_id[$x],
                          'certificate_type' => $request->certificate_type[$x],
                          'cert_no' => $request->cert_no[$x],
                          'issue_date' => $request->certificate_issue_date[$x],
@@ -194,11 +197,12 @@ class general_cvController extends Controller
      */
     public function edit($id)
     {
+        $certificates = DB::table('certificates')->where('status', '1')->orderBy('order')->get();
         $general_cv = general_cv::find($id);
         $crew = DB::table('crews')->get();
         $vessels = DB::table('vessels')->get();
         $this->setPageTitle('Edit General CV','Edit General CV','Edit General CV');
-        return view('backend.pages.general-cv.edit', compact('general_cv', 'crew', 'vessels'));
+        return view('backend.pages.general-cv.edit', compact('general_cv', 'crew', 'vessels', 'certificates'));
     }
 
     /**
@@ -343,7 +347,8 @@ class general_cvController extends Controller
                     if($request->update_qualification_certificate[$x] != 0){
                         crew_qualification_certificate::find($request->update_qualification_certificate[$x])->update([
                             'crew_id' => $request->crew_id,
-                            'qualification_title' => $request->qualification_title[$x],
+                            'certificate_id' => $request->certificate_id[$x],
+                            'qualification_title' => $request->certificate_id[$x],
                             'certificate_type' => $request->certificate_type[$x],
                             'cert_no' => $request->cert_no[$x],
                             'issue_date' => $request->certificate_issue_date[$x],
@@ -355,7 +360,8 @@ class general_cvController extends Controller
                     }else{
                         crew_qualification_certificate::insert([
                             'crew_id' => $request->crew_id,
-                            'qualification_title' => $request->qualification_title[$x],
+                            'certificate_id' => $request->certificate_id[$x],
+                            'qualification_title' => $request->certificate_id[$x],
                             'certificate_type' => $request->certificate_type[$x],
                             'cert_no' => $request->cert_no[$x],
                             'issue_date' => $request->certificate_issue_date[$x],

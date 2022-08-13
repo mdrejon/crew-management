@@ -9,6 +9,10 @@ class crew extends Model
 {
     use HasFactory;
     protected $fillable = array(
+        'id_no',
+        'sign_in',
+        'sign_out',
+        'vessel_id',
         'last_name',
         'given_name',
         'full_name',

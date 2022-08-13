@@ -6,15 +6,14 @@
 
         </div>
         <div class="card mb-4">
-            <h5 class="card-header">{{  $vessel->vessel_name }}</h5>
             <!-- Account -->
             <div class="card-body">
               <div class="d-flex align-items-start align-items-sm-center gap-4">
-                <img src="{{  asset('/'.$vessel->vessel_flag.'') }}" alt="user-avatar" class="d-block rounded" id="uploadedAvatar" width="40" height="40">
+                <img src="{{  asset('/'.$vessel->flag_img.'') }}" alt="user-avatar" class="d-block rounded" id="uploadedAvatar" width="40" height="40">
                 <div class="button-wrapper">
                     <ul class="nav nav-pills flex-column flex-md-row mb-3">
                         <li class="nav-item">
-                          <a class="nav-link active" href="{{ route('admin.vessel.show', [$vessel->id]) }}"> Edit Vessel</a>
+                          <h5>{{ $vessel->vessel_name }} </h5>
                         </li>
 
                     </ul>

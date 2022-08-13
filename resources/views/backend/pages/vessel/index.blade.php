@@ -4,13 +4,9 @@
     <div class="row">
         <div class="col-xxl">
             <div class="card mb-4">
-              <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">Basic Layout</h5>
-                <small class="text-muted float-end">Default label</small>
-              </div>
                 <!-- Basic Bootstrap Table -->
                 <div class="card">
-                    <h5 class="card-header">Table Basic</h5>
+                    <h5 class="card-header">{{ $title }}</h5>
                     <div class="table-responsive text-nowrap">
                       <table class="table">
                         <thead>

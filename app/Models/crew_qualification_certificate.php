@@ -10,7 +10,7 @@ class crew_qualification_certificate extends Model
     use HasFactory;
     protected $fillable = array(
         'crew_id',
-        'qualification_title',
+        'certificate_id',
         'certificate_type',
         'cert_no',
         'issue_date',

@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\DB;
     <div class="row">
         <div class="col-xxl">
             <div class="card mb-4">
-              <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">Basic Layout</h5>
-                <small class="text-muted float-end">Default label</small>
-              </div>
                 <!-- Basic Bootstrap Table -->
                 <div class="card">
-                    <h5 class="card-header">Table Basic</h5>
+                    <h5 class="card-header">{{ $title }}</h5>
                     <div class="table-responsive text-nowrap">
                       <table class="table">
                         <thead>
                           <tr>
                             <th>Name</th>
-                            <th>Status</th>
+                            <th>ID No</th>
+                            <th>Vessel Name</th>
+                            <th>Sign In</th>
+                            <th>Sign Out</th>
+                            <th>Certificate</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
@@ -34,7 +34,11 @@ use Illuminate\Support\Facades\DB;
                                             <strong>{{ $data->full_name }}</strong>
                                         </a>
                                     </td>
-                                     <td><span class="badge bg-label-primary me-1">{{ $data->status }}</span></td>
+                                     <td><span class="badge bg-label-primary me-1">{{ $data->vessel_name }}</span></td>
+                                     <td><span class="badge bg-label-primary me-1">{{ $data->id_no }}</span></td>
+                                     <td><span class="badge bg-label-primary me-1">{{ $data->sign_in }}</span></td>
+                                     <td><span class="badge bg-label-primary me-1">{{ $data->sign_out }}</span></td>
+                                     <td><span ><button  type="button" class="btn btn-primary GetCrewCertificate" data-id="{{ $data->id }}"  data-bs-toggle="modal"  data-bs-target="#CrewCertificateModal"  >Certificate</button></span></td>
                                     <td>
                                     <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -76,4 +80,41 @@ use Illuminate\Support\Facades\DB;
         </div>
     </div>
 </div>
+ <!-- Large Modal -->
+ <div class="modal fade" id="CrewCertificateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel3">Certificate</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="viewCertifica"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@push('script')
+<script>
+    $(document).ready(function(){
+        $(".GetCrewCertificate").click(function(e) {
+            e.preventDefault();
+            $("#viewCertifica").empty();
+            var crew_id = $(this).attr('data-id');
+            jQuery.ajax({
+                url: "{{ route('admin.crewCertificate') }}",
+                method: 'post',
+                data: {
+                    _token: '<?php echo csrf_token() ?>',
+                    crew_id: crew_id,
+                },
+                success: function(result){
+                    $("#viewCertifica").append(result);
+                }});
+            });
+});
+  </script>
+@endpush
 @endsection

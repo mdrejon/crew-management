@@ -1,5 +1,8 @@
 @extends('layouts.backend')
 @section('contents')
+<?php
+use Illuminate\Support\Facades\DB;
+?>
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
         <div class="col-md-12">
@@ -200,19 +203,46 @@
                                     <th><strong>Issued By</strong></th>
                                     <th><strong>Sign By</strong></th>
                                 </tr>
-                                <tr>
-                                    <th colspan="6" style="text-align: center"><strong>Certificate </strong></th>
-                                </tr>
-                                @foreach ($qualification_certificates as  $data)
+                                <?php
+                                 $certificates = ['general', 'professional', 'medical'];
+                                 ?>
+                                 @foreach ( $certificates as $certificate)
                                     <tr>
-                                        <td>{{ $data->qualification_title }}</td>
-                                        <td>{{ $data->cert_no }}</td>
-                                        <td>{{ $data->issue_date }}</td>
-                                        <td>{{ $data->expiry_date }}</td>
-                                        <td>{{ $data->issued_by }}</td>
-                                        <td>{{ $data->sign_off }}</td>
+                                        <th colspan="6" style="text-align: center"><strong>{{ $certificate }} </strong></th>
                                     </tr>
-                                @endforeach
+                                    <?php
+                                    $certificate_data = DB::table('certificates')->where('certificate_type', $certificate)->where('status', '1')->orderBy('order')->get();
+                                    ?>
+                                    @foreach ($certificate_data as  $data)
+                                    <?php //dd($data); ?>
+                                        <?php  $crew_certificate = DB::table('crew_qualification_certificates')->where('certificate_type', $certificate)->where('certificate_id', $data->id)->first();
+                                        if($crew_certificate){
+                                            $cert_no = $crew_certificate->cert_no;
+                                            $issue_date = $crew_certificate->issue_date;
+                                            $expiry_date = $crew_certificate->expiry_date;
+                                            $issued_by = $crew_certificate->issued_by;
+                                            $sign_off = $crew_certificate->sign_off;
+
+                                        }else{
+                                            $cert_no = '';
+                                            $issue_date = '';
+                                            $expiry_date = '';
+                                            $issued_by = '';
+                                            $sign_off = '';
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td>{{ $data->certificate_title }}</td>
+                                            <td>{{ $cert_no }}</td>
+                                            <td>{{ $issue_date }}</td>
+                                            <td>{{ $expiry_date }}</td>
+                                            <td>{{ $issued_by }}</td>
+                                            <td>{{ $sign_off }}</td>
+                                        </tr>
+                                    @endforeach
+                                 @endforeach
+
+
 
                             </table>
                         </div>

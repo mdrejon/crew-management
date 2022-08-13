@@ -18,8 +18,50 @@ class crewController extends Controller
     public function index()
     {
         $this->setPageTitle('Crew List','Crew List','Crew List');
-        $crew = DB::table('crews')->paginate(10);
+        $crew = DB::table('crews')
+        ->leftJoin('vessels', 'vessels.id', '=', 'crews.vessel_id')
+        ->select('crews.id', 'crews.full_name', 'crews.img', 'crews.id_no', 'crews.sign_in', 'crews.sign_out', 'crews.vessel_id', 'vessels.vessel_name' )
+        ->paginate(10);
         return view('backend.pages.crew.index', compact('crew'));
+    }
+
+    public function crewCertificate(Request $requests){
+        // return $requests->crew_id;
+        $certificate = DB::table('crew_qualification_certificates')
+        ->leftJoin('certificates', 'certificates.id', '=', 'crew_qualification_certificates.certificate_id')
+        ->select('crew_qualification_certificates.id', 'certificates.certificate_title', 'crew_qualification_certificates.certificate_type', 'crew_qualification_certificates.cert_no', 'crew_qualification_certificates.issue_date', 'crew_qualification_certificates.expiry_date', 'crew_qualification_certificates.issued_by', 'crew_qualification_certificates.sign_off' )
+        ->where('crew_qualification_certificates.crew_id', $requests->crew_id)
+        ->get();
+        $html = ' <div class="custom-table">
+            <table class="table table-responsive">
+                <tr>
+                    <th>Certificates Title</th>
+                    <th>Certificates Type</th>
+                    <th>Cert No.</th>
+                    <th>Issued Date (DD/MM/YYYY) </th>
+                    <th>Expiry Date (DD/MM/YYYY) </th>
+                    <th>Issued By</th>
+                    <th>Sign By</th>
+                </tr>';
+        foreach($certificate as $data){
+            $html .= '
+                <tr>
+                    <td>'.$data->certificate_title.'</td>
+                    <td>'.$data->certificate_type.'</td>
+                    <td>'.$data->cert_no.'</td>
+                    <td>'.$data->issue_date.'</td>
+                    <td>'.$data->expiry_date.'</td>
+                    <td>'.$data->issued_by.'</td>
+                    <td>'.$data->sign_off.'</td>
+                </tr>';
+        }
+        $html .=   '</table>
+        </div>';
+
+
+        return  $html;
+
+
     }
 
     /**
@@ -29,8 +71,9 @@ class crewController extends Controller
      */
     public function create()
     {
+        $vessels = DB::table('vessels')->get();
         $this->setPageTitle('Add New Crew','Add New Crew','Add New Crew');
-        return view('backend.pages.crew.add');
+        return view('backend.pages.crew.add', compact('vessels'));
     }
 
     /**
@@ -42,6 +85,8 @@ class crewController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'id_no' => 'required',
+            'vessel_id' => 'required',
             'last_name' => 'required',
             'given_name' => 'required',
             'full_name' => 'required',
@@ -49,6 +94,9 @@ class crewController extends Controller
             'place_of_birth' => 'required',
             'date_of_birth' => 'required',
         ]);
+        if($request->vessel_id == 0 || $request->vessel_id == ''){  $vessel_id = 0;  }else{  $vessel_id = $request->vessel_id; }
+        if($request->sign_in == 0 || $request->sign_in == ''){  $sign_in = '';  }else{  $sign_in = $request->sign_in; }
+        if($request->sign_out == 0 || $request->sign_out == ''){  $sign_out = '';  }else{  $sign_out = $request->sign_out; }
         if($request->height == 0 || $request->height == ''){  $height = '';  }else{  $height = $request->height; }
         if($request->weight == 0 || $request->weight == ''){  $weight = '';  }else{  $weight = $request->weight; }
         if($request->boiler_suit == 0 || $request->boiler_suit == ''){  $boiler_suit = '';  }else{  $boiler_suit = $request->boiler_suit; }
@@ -76,9 +124,13 @@ class crewController extends Controller
 
          // Insert Crew And Get The id
          $crew =  crew::insertGetId([
+            'id_no' => $request->id_no,
             'last_name' => $request->last_name,
             'given_name' => $request->given_name,
             'full_name' => $request->full_name,
+            'vessel_id' => $vessel_id,
+            'sign_in' => $sign_in,
+            'sign_out' => $sign_out,
             'img' => $img,
             'place_of_birth' => $request->place_of_birth,
             'date_of_birth' => $request->date_of_birth,
@@ -124,7 +176,7 @@ class crewController extends Controller
     public function show($id)
     {
         $crew = crew::find($id);
-        $this->setPageTitle('Edit Crew','Edit Crew','Edit Crew');
+        $this->setPageTitle('View Crew','View Crew','View Crew');
         return view('backend.pages.crew.view', compact('crew'));
     }
 
@@ -136,9 +188,10 @@ class crewController extends Controller
      */
     public function edit($id)
     {
+        $vessels = DB::table('vessels')->get();
         $crew = crew::find($id);
         $this->setPageTitle('Edit Crew','Edit Crew','Edit Crew');
-        return view('backend.pages.crew.edit', compact('crew'));
+        return view('backend.pages.crew.edit', compact('crew', 'vessels'));
     }
 
     /**
@@ -152,6 +205,8 @@ class crewController extends Controller
     {
 
         $validatedData = $request->validate([
+            'id_no' => 'required',
+            'vessel_id' => 'required',
             'last_name' => 'required',
             'given_name' => 'required',
             'full_name' => 'required',
@@ -159,6 +214,9 @@ class crewController extends Controller
             'place_of_birth' => 'required',
             'date_of_birth' => 'required',
         ]);
+        if($request->vessel_id == 0 || $request->vessel_id == ''){  $vessel_id = 0;  }else{  $vessel_id = $request->vessel_id; }
+        if($request->sign_in == 0 || $request->sign_in == ''){  $sign_in = '';  }else{  $sign_in = $request->sign_in; }
+        if($request->sign_out == 0 || $request->sign_out == ''){  $sign_out = '';  }else{  $sign_out = $request->sign_out; }
         if($request->height == 0 || $request->height == ''){  $height = '';  }else{  $height = $request->height; }
         if($request->weight == 0 || $request->weight == ''){  $weight = '';  }else{  $weight = $request->weight; }
         if($request->boiler_suit == 0 || $request->boiler_suit == ''){  $boiler_suit = '';  }else{  $boiler_suit = $request->boiler_suit; }
@@ -190,9 +248,13 @@ class crewController extends Controller
         }
         // Insert Crew And Get The id
         $crew =  crew::find($id)->update([
+            'id_no' => $request->id_no,
             'last_name' => $request->last_name,
             'given_name' => $request->given_name,
             'full_name' => $request->full_name,
+            'sign_in' => $sign_in,
+            'sign_out' => $sign_out,
+            'vessel_id' => $vessel_id,
             'img' => $img,
             'place_of_birth' => $request->place_of_birth,
             'date_of_birth' => $request->date_of_birth,

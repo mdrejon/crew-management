@@ -250,7 +250,7 @@ class vesselController extends Controller
 
         // Flag Image
         $flag_img = $this->imageUpload($request->file('flag_img'),'vessel/country/',null,null);
-
+        // dd($flag_img);
         // Insert Vessel And Get The id
         $vessel_id =  vessel::find($id)->update([
             'vessel_name' => $vessel_name,

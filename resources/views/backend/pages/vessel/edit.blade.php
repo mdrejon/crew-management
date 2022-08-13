@@ -7,13 +7,11 @@ use Illuminate\Support\Facades\DB;
     <div class="row">
         <form method="post" action="{{ route('admin.vessel.update',[$vessel->id]) }}" enctype="multipart/form-data" >
             @method('PUT')
-
           @csrf
             <div class="col-xxl">
                 <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">{{ $title }}</h5>
-                    <small class="text-muted float-end">Default label</small>
                 </div>
                 <div class="card-body">
                     <x-form.input labelName="Vessel Name" value="{{ $vessel->vessel_name }}" name="vessel_name" placeholder="Vessel Name" />

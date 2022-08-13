@@ -135,9 +135,18 @@
                                   </h2>
                                   <div id="crew_qualification_certificate_1" class="accordion-collapse collapse show" data-bs-parent="#crew_qualification_certificateExample"  >
                                     <div class="accordion-body">
-                                      <x-form.input labelName="Qualification Title" name="qualification_title[]" placeholder="Qualification Title" />
-                                      <x-form.input labelName="Certificate Type" name="certificate_type[]" placeholder="Certificate Type" />
-
+                                        <x-form.select name="certificate_type[]" labelName="Certificate Id">
+                                            <option value="">Select Please</option>
+                                            <option value="general">General</option>
+                                            <option value="professional">Professional</option>
+                                            <option value="medical">Medical</option>
+                                        </x-form.select>
+                                        <x-form.select name="certificate_id[]" class="certificate_id" data-certificate-id="1" labelName="Certificate Title">
+                                            <option value="">Select Please</option>
+                                            @foreach ($certificates as $data)
+                                            <option value="{{ $data->id }}">{{ $data->certificate_title }}</option>
+                                            @endforeach
+                                        </x-form.select>
                                       <x-form.input labelName="Cert No" name="cert_no[]" placeholder="Cert No" />
                                       <x-form.input labelName="Issue Date" name="certificate_issue_date[]" placeholder="Issue Date" />
                                       <x-form.input labelName="Expir Date" name="certificate_expiry_date[]" placeholder="Expir Date" />
@@ -246,15 +255,25 @@
                 <button type="button"  class="accordion-button" data-bs-toggle="collapse" data-bs-target="#crew_qualification_certificate_`+crew_qualification_certificate+`" aria-expanded="true"  aria-controls="crew_qualification_certificate_details" >Data</button>
                 </h2>
                 <div id="crew_qualification_certificate_`+crew_qualification_certificate+`" class="accordion-collapse collapse show" data-bs-parent="#crew_qualification_certificateExample"  >
-                <div class="accordion-body">
-                    <x-form.input labelName="Qualification Title" name="qualification_title[]" placeholder="Qualification Title" />
-                    <x-form.input labelName="Certificate Type" name="certificate_type[]" placeholder="Certificate Type" />
-                    <x-form.input labelName="Cert No" name="cert_no[]" placeholder="Cert No" />
-                    <x-form.input labelName="Issue Date" name="certificate_issue_date[]" placeholder="Issue Date" />
-                    <x-form.input labelName="Expir Date" name="certificate_expiry_date[]" placeholder="Expir Date" />
-                    <x-form.input labelName="Issued By" name="issued_by[]" placeholder="Issued By" />
-                    <x-form.input labelName="Sign Off" name="certificate_sign_off[]" placeholder="Sign Off" />
-                </div>
+                    <div class="accordion-body">
+                        <x-form.select name="certificate_type[]" labelName="Certificate Id">
+                            <option value="">Select Please</option>
+                            <option value="general">General</option>
+                            <option value="professional">Professional</option>
+                            <option value="medical">Medical</option>
+                        </x-form.select>
+                        <x-form.select name="certificate_id[]" class="certificate_id" data-certificate-id="1" labelName="Status">
+                            <option value="">Select Please</option>
+                            @foreach ($certificates as $data)
+                            <option value="{{ $data->id }}">{{ $data->certificate_title }}</option>
+                            @endforeach
+                        </x-form.select>
+                        <x-form.input labelName="Cert No" name="cert_no[]" placeholder="Cert No" />
+                        <x-form.input labelName="Issue Date" name="certificate_issue_date[]" placeholder="Issue Date" />
+                        <x-form.input labelName="Expir Date" name="certificate_expiry_date[]" placeholder="Expir Date" />
+                        <x-form.input labelName="Issued By" name="issued_by[]" placeholder="Issued By" />
+                        <x-form.input labelName="Sign Off" name="certificate_sign_off[]" placeholder="Sign Off" />
+                    </div>
                 </div>
             </div>`);
          });

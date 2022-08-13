@@ -64,17 +64,17 @@
             </a>
           </li>
           <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
+            <a href="#" class="menu-link">
               <div data-i18n="Without navbar">On board Crew</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
+            <a href="#" class="menu-link">
               <div data-i18n="Without navbar">On pool Signout Crew</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
+            <a href="#" class="menu-link">
               <div data-i18n="Without navbar">General Crew </div>
             </a>
           </li>
@@ -104,22 +104,32 @@
 
         <ul class="menu-sub">
           <li class="menu-item">
-            <a href="layouts-without-menu.html" class="menu-link">
+            <a href="{{ route('admin.certificate.create') }}" class="menu-link">
+              <div data-i18n="Without menu">Add Certificate</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="{{ route('admin.certificate.general') }}" class="menu-link">
               <div data-i18n="Without menu">General</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
+            <a href="{{ route('admin.certificate.professional') }}" class="menu-link">
               <div data-i18n="Without navbar">Professional</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
+            <a href="{{ route('admin.certificate.medical') }}" class="menu-link">
               <div data-i18n="Without navbar">Medical</div>
             </a>
           </li>
+          {{-- <li class="menu-item">
+            <a href="{{ route('admin.certificate.flag-state') }}" class="menu-link">
+              <div data-i18n="Without navbar">Flag State</div>
+            </a>
+          </li> --}}
           <li class="menu-item">
-            <a href="layouts-without-navbar.html" class="menu-link">
+            <a href="#" class="menu-link">
               <div data-i18n="Without navbar">Expaired Certificate List</div>
             </a>
           </li>

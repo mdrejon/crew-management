@@ -169,9 +169,18 @@ use Illuminate\Support\Facades\DB;
                                   <div id="crew_qualification_certificate_{{ $qualification_certificates_inc }}" class="accordion-collapse collapse show" data-bs-parent="#crew_qualification_certificateExample"  >
                                     <div class="accordion-body">
                                         <input type="hidden" name="update_qualification_certificate[]" value="{{ $data->id }}">
-                                      <x-form.input value="{{ $data->qualification_title }}" labelName="Qualification Title" name="qualification_title[]" placeholder="Qualification Title" />
-                                      <x-form.input value="{{ $data->certificate_type }}" labelName="Certificate Type" name="certificate_type[]" placeholder="Certificate Type" />
-
+                                        <x-form.select name="certificate_type[]" labelName="Certificate Id">
+                                            <option value="">Select Please</option>
+                                            <option <?php if($data->certificate_type == 'general' ) echo "selected"; ?> value="general">General</option>
+                                            <option <?php if($data->certificate_type == 'professional' ) echo "selected"; ?> value="professional">Professional</option>
+                                            <option <?php if($data->certificate_type == 'medical' ) echo "selected"; ?> value="medical">Medical</option>
+                                        </x-form.select>
+                                        <x-form.select name="certificate_id[]" class="certificate_id" data-certificate-id="1" labelName="Certificate Title">
+                                            <option value="">Select Please</option>
+                                            @foreach ($certificates as $data2)
+                                            <option <?php if($data->certificate_id == $data2->id ) echo "selected"; ?> value="{{ $data2->id }}">{{ $data2->certificate_title }}</option>
+                                            @endforeach
+                                        </x-form.select>
                                       <x-form.input value="{{ $data->cert_no }}"  labelName="Cert No" name="cert_no[]" placeholder="Cert No" />
                                       <x-form.input value="{{ $data->issue_date }}"  labelName="Issue Date" name="certificate_issue_date[]" placeholder="Issue Date" />
                                       <x-form.input value="{{ $data->expiry_date }}"  labelName="Expir Date" name="certificate_expiry_date[]" placeholder="Expir Date" />
@@ -287,8 +296,18 @@ use Illuminate\Support\Facades\DB;
                 <div id="crew_qualification_certificate_`+crew_qualification_certificate+`" class="accordion-collapse collapse show" data-bs-parent="#crew_qualification_certificateExample"  >
                 <div class="accordion-body">
                     <input type="hidden" name="update_qualification_certificate[]" value="0">
-                    <x-form.input labelName="Qualification Title" name="qualification_title[]" placeholder="Qualification Title" />
-                    <x-form.input labelName="Certificate Type" name="certificate_type[]" placeholder="Certificate Type" />
+                    <x-form.select name="certificate_type[]" labelName="Certificate Id">
+                        <option value="">Select Please</option>
+                        <option value="general">General</option>
+                        <option value="professional">Professional</option>
+                        <option value="medical">Medical</option>
+                    </x-form.select>
+                    <x-form.select name="certificate_id[]" class="certificate_id" data-certificate-id="1" labelName="Status">
+                        <option value="">Select Please</option>
+                        @foreach ($certificates as $data)
+                        <option value="{{ $data->id }}">{{ $data->certificate_title }}</option>
+                        @endforeach
+                    </x-form.select>
                     <x-form.input labelName="Cert No" name="cert_no[]" placeholder="Cert No" />
                     <x-form.input labelName="Issue Date" name="certificate_issue_date[]" placeholder="Issue Date" />
                     <x-form.input labelName="Expir Date" name="certificate_expiry_date[]" placeholder="Expir Date" />
